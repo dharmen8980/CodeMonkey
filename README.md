@@ -27,3 +27,7 @@ node scripts/verify-theme.js
 ```
 
 The checks use local fixtures and do not contact GitLab or launch containers.
+
+## Introduction site
+
+The standalone CodeMonkey + Harness Pro introduction lives in [`site/`](site/). It is a Next.js application with Tailwind CSS and shadcn/ui. Deploy that folder as a separate Vercel project by setting its Root Directory to `site`; see [`site/README.md`](site/README.md). It does not expose the orchestrator API.
