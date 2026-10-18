@@ -1,14 +1,17 @@
-import { ArrowDown, ArrowRight, ArrowUpRight, Braces, GitPullRequestArrow, ScanEye, Terminal } from "lucide-react"
+import { ArrowDown, ArrowRight, ArrowUpRight, Braces, Terminal } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import { CodeBlock, SiteHeader } from "@/components/site-actions"
+import { CodeMonkeyArchitecture } from "@/components/codemonkey-architecture"
+import { HarnessProArchitecture } from "@/components/harness-pro-architecture"
+import { CombinedWorkflow } from "@/components/combined-workflow"
 
 const codeMonkeyUrl = "https://github.com/dharmen8980/CodeMonkey"
 const harnessProUrl = "https://github.com/dharmen8980/Harness-Pro"
 
 const codeMonkeyFeatures = [
-  { number: "01", title: "Bring work in", body: "Receive direct tasks and GitLab merge request events, then keep each request in a visible queue." },
+  { number: "01", title: "Bring work in", body: "Receive direct tasks and repository review events, then keep each request in a visible queue." },
   { number: "02", title: "Run the right worker", body: "Launch a dedicated Docker worker with a repository checkout, role instructions, and configured credentials." },
   { number: "03", title: "Keep the evidence", body: "Follow runs in the dashboard, inspect artifacts and chat, and use the optional acceptance pipeline for build, test, SonarQube, and human review." },
 ]
@@ -17,13 +20,6 @@ const harnessFeatures = [
   { number: "01", title: "Declare the contract", body: "A versioned JSON manifest chooses the provider, model, mounted paths, capabilities, MCP servers, behavior, and limits." },
   { number: "02", title: "Compile before execution", body: "Validate the manifest and inspect its runtime configuration without reading mounts or contacting a provider." },
   { number: "03", title: "Run with a trace", body: "Start one headless run with registered tools and record model and tool activity in a JSONL trace." },
-]
-
-const workflow = [
-  { number: "01", owner: "CODEMONKEY", title: "A request arrives", body: "A task or GitLab event enters the queue with its context and status.", icon: GitPullRequestArrow },
-  { number: "02", owner: "HARNESS PRO", title: "The agent is defined", body: "A manifest sets the model, workspace access, tools, and run limits.", icon: Braces },
-  { number: "03", owner: "BOTH TOOLS", title: "The worker runs", body: "CodeMonkey tracks the run while Harness Pro records its agent trace.", icon: Terminal },
-  { number: "04", owner: "HUMAN", title: "The result is reviewed", body: "Changes and evidence stay available for an explicit acceptance decision.", icon: ScanEye },
 ]
 
 function Eyebrow({ number, children, light = false }: { number: string; children: string; light?: boolean }) {
@@ -84,12 +80,16 @@ export default function Home() {
           <div>
             <Eyebrow number="02">CODEMONKEY / ORCHESTRATION</Eyebrow>
             <h2 id="codemonkey-title" className="mt-8 max-w-[530px] text-4xl font-bold leading-[1.14] tracking-[-0.05em] text-[#17243b] md:text-5xl">A control room for every agent task.</h2>
-            <p className="mt-7 max-w-[510px] text-lg leading-8 text-[#34445f]">CodeMonkey is a self-hosted GitLab task orchestrator. It brings requests into one place, launches dedicated Docker workers, and makes progress and results visible to the people responsible for delivery.</p>
+            <p className="mt-7 max-w-[510px] text-lg leading-8 text-[#34445f]">CodeMonkey is a self-hosted task orchestrator. It brings requests into one place, launches dedicated Docker workers, and makes progress and results visible to the people responsible for delivery.</p>
             <div className="mt-8"><RepositoryLink href={codeMonkeyUrl} label="Explore CodeMonkey on GitHub" /></div>
           </div>
           <div className="border-t-2 border-[#2563eb]">
             {codeMonkeyFeatures.map(feature => <div key={feature.number} className="grid grid-cols-[52px_1fr] gap-5 border-b border-[#dce3ee] py-7"><span className="font-mono text-sm font-bold text-[#1d4ed8]">{feature.number}</span><div><h3 className="text-2xl font-semibold tracking-[-0.04em] text-[#17243b]">{feature.title}</h3><p className="mt-3 text-base leading-7 text-[#34445f]">{feature.body}</p></div></div>)}
           </div>
+        </div>
+        <div className="page-container mt-16">
+          <CodeMonkeyArchitecture />
+          <p className="mt-4 max-w-[800px] text-sm leading-6 text-[#4e5f79]">This map shows the orchestration roles. The public repository setup guide lists the integrations and acceptance checks currently available.</p>
         </div>
       </section>
 
@@ -123,15 +123,17 @@ export default function Home() {
         <div className="page-container mt-14 grid gap-4 md:grid-cols-3">
           {harnessFeatures.map(feature => <div key={feature.number} className="border-t-2 border-[#2563eb] bg-white px-6 py-7"><span className="font-mono text-sm font-bold text-[#1d4ed8]">{feature.number}</span><h3 className="mt-5 text-xl font-semibold tracking-[-0.035em] text-[#17243b]">{feature.title}</h3><p className="mt-3 text-base leading-7 text-[#34445f]">{feature.body}</p></div>)}
         </div>
+        <div className="page-container mt-16">
+          <HarnessProArchitecture />
+          <p className="mt-4 max-w-[800px] text-sm leading-6 text-[#4e5f79]">The manifest and compiled configuration define the run. The public repository documents the exact schema, capabilities, and supported providers.</p>
+        </div>
       </section>
 
       <section id="workflow" className="scroll-mt-20 bg-[#101a2d] py-24 text-white lg:py-32" aria-labelledby="workflow-title">
         <div className="page-container">
           <Eyebrow number="04" light>HOW THEY WORK TOGETHER</Eyebrow>
-          <div className="mt-8 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between"><h2 id="workflow-title" className="max-w-[720px] text-4xl font-bold leading-[1.14] tracking-[-0.05em] md:text-5xl">One request. Four visible steps.</h2><p className="max-w-[360px] text-lg leading-8 text-[#dce5f5]">The handoff from orchestration to execution is explicit, and the outcome stays reviewable.</p></div>
-          <div className="mt-12 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-            {workflow.map(step => <Card key={step.number} className="gap-0 border border-[#405371] bg-[#17243b] py-0 text-white ring-0"><CardContent className="flex h-full flex-col px-6 py-7"><div className="flex items-center justify-between"><span className="font-mono text-sm font-bold text-[#a5c6ff]">{step.number}</span><step.icon className="size-6 text-[#a5c6ff]" aria-hidden="true" /></div><h3 className="mt-12 text-xl font-semibold leading-snug tracking-[-0.035em]">{step.title}</h3><p className="mt-3 flex-1 text-base leading-7 text-[#dce5f5]">{step.body}</p><p className="mt-8 border-t border-[#405371] pt-4 font-mono text-xs font-bold tracking-[0.12em] text-[#a5c6ff]">{step.owner}</p></CardContent></Card>)}
-          </div>
+          <div className="mt-8 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between"><h2 id="workflow-title" className="max-w-[720px] text-4xl font-bold leading-[1.14] tracking-[-0.05em] md:text-5xl">One task. Two systems. One reviewable result.</h2><p className="max-w-[360px] text-lg leading-8 text-[#dce5f5]">The handoff from orchestration to execution is explicit, and the outcome stays reviewable.</p></div>
+          <div className="mt-12"><CombinedWorkflow /></div>
           <div className="mt-8 border-l-4 border-[#8bb5ff] bg-[#1e3152] px-6 py-5 text-base leading-7 text-[#e6efff]"><strong className="text-white">In use today:</strong> A deployed CodeMonkey setup already runs workers through Harness Pro. The public CodeMonkey checkout currently ships the Claude Code worker path; its Harness Pro adapter has not been published here.</div>
         </div>
       </section>
@@ -141,7 +143,7 @@ export default function Home() {
           <Eyebrow number="05">GET STARTED</Eyebrow>
           <div className="mt-8 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between"><h2 id="start-title" className="max-w-[700px] text-4xl font-bold leading-[1.14] tracking-[-0.05em] text-[#17243b] md:text-5xl">Pick the part you need.</h2><p className="max-w-[380px] text-lg leading-8 text-[#34445f]">Run either project on its own. Their repositories have the full setup guides.</p></div>
           <div className="mt-12 grid gap-5 lg:grid-cols-2">
-            <Card className="gap-0 rounded-xl border border-[#cbd7e8] bg-white py-0 ring-0"><CardContent className="flex h-full flex-col p-7 sm:p-9"><div className="flex items-center gap-4"><span className="grid size-12 place-items-center rounded-lg bg-[#101a2d] text-[#a5c6ff]"><Terminal className="size-6" aria-hidden="true" /></span><h3 className="text-2xl font-semibold tracking-[-0.04em] text-[#17243b]">Start CodeMonkey</h3></div><p className="mt-6 text-base leading-7 text-[#34445f]">Configure a target repository, GitLab access, and model credentials, then start the local dashboard.</p><CodeBlock code={["cp .env.example .env", "./start.sh"].join("\n")} /><div className="mt-auto"><RepositoryLink href={codeMonkeyUrl + "#setup"} label="Read the CodeMonkey setup guide" /></div></CardContent></Card>
+            <Card className="gap-0 rounded-xl border border-[#cbd7e8] bg-white py-0 ring-0"><CardContent className="flex h-full flex-col p-7 sm:p-9"><div className="flex items-center gap-4"><span className="grid size-12 place-items-center rounded-lg bg-[#101a2d] text-[#a5c6ff]"><Terminal className="size-6" aria-hidden="true" /></span><h3 className="text-2xl font-semibold tracking-[-0.04em] text-[#17243b]">Start CodeMonkey</h3></div><p className="mt-6 text-base leading-7 text-[#34445f]">Configure a target repository, source-control access, and model credentials, then start the local dashboard.</p><CodeBlock code={["cp .env.example .env", "./start.sh"].join("\n")} /><div className="mt-auto"><RepositoryLink href={codeMonkeyUrl + "#setup"} label="Read the CodeMonkey setup guide" /></div></CardContent></Card>
             <Card className="gap-0 rounded-xl border border-[#cbd7e8] bg-white py-0 ring-0"><CardContent className="flex h-full flex-col p-7 sm:p-9"><div className="flex items-center gap-4"><span className="grid size-12 place-items-center rounded-lg bg-[#dbeafe] text-[#1d4ed8]"><Braces className="size-6" aria-hidden="true" /></span><h3 className="text-2xl font-semibold tracking-[-0.04em] text-[#17243b]">Start Harness Pro</h3></div><p className="mt-6 text-base leading-7 text-[#34445f]">Install the Python package, copy an example manifest, inspect the compiled contract, and run an agent.</p><CodeBlock code={["python -m pip install -e .", "cp examples/standalone-anthropic.json my-agent.json", "harness compile --manifest my-agent.json -o runtime.json", "harness run --manifest my-agent.json --prompt \"Review the repo\" --trace-file trace.jsonl"].join("\n")} /><div className="mt-auto"><RepositoryLink href={harnessProUrl + "#quick-start"} label="Read the Harness Pro quick start" /></div></CardContent></Card>
           </div>
         </div>
