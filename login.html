@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+        <meta name="referrer" content="no-referrer">
+        <meta name="color-scheme" content="light dark">
+        <meta name="theme-color" content="#0081bc">
+        <title>Sign in · Code-Monkey</title>
+        <script src="/theme.js"></script>
+        <link rel="stylesheet" href="/brand.css">
+        <link rel="stylesheet" href="/login.css">
+    </head>
+    <body class="login-page">
+        <main class="login-layout">
+            <section class="login-story" aria-label="CodeMonkey">
+                <div class="login-wordmark">CODE-MONKEY</div>
+                <div class="login-art" aria-hidden="true">
+                    <div class="art-orbit orbit-one"></div>
+                    <div class="art-orbit orbit-two"></div>
+                    <div class="art-core">&lt;/&gt;</div>
+                    <span class="art-node node-one"></span>
+                    <span class="art-node node-two"></span>
+                    <span class="art-node node-three"></span>
+                </div>
+                <div class="login-story-copy">
+                    <p class="login-tagline">Great engineering.<br>A clearer view.</p>
+                    <p>One workspace for your agents, decisions, and deliveries.</p>
+                </div>
+                <span class="login-story-footer">CODEMONKEY · ENGINEERING WORKSPACE</span>
+            </section>
+            <section class="login-form-panel">
+                <label class="theme-picker login-theme-picker">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18Z" fill="currentColor" stroke="none"/></svg>
+                    <span class="sr-only">Color theme</span>
+                    <select data-theme-select><option value="light">Light</option><option value="dark">Dark</option><option value="system" selected>System</option></select>
+                </label>
+                <form id="f" method="POST" action="/login" autocomplete="on">
+                    <div class="eyebrow">YOUR WORKSPACE AWAITS</div>
+                    <h1>Welcome back.</h1>
+                    <p class="sub">Sign in to your Code-Monkey workspace.</p>
+                    <p class="err" id="err" role="alert"></p>
+                    <label for="username">Username</label>
+                    <input id="username" name="username" type="text" autocomplete="username" autocapitalize="none" autocorrect="off" spellcheck="false" placeholder="Your username" required>
+                    <label for="token">Access token</label>
+                    <input id="token" name="token" type="password" autocomplete="current-password" autocapitalize="none" autocorrect="off" spellcheck="false" placeholder="Enter your access token" required>
+                    <button class="button" id="btn" type="submit">Sign in</button>
+                    <p class="login-form-note">Use the credentials provided for your workspace.</p>
+                </form>
+                <footer>Code-Monkey</footer>
+            </section>
+        </main>
+        <script src="/login.js"></script>
+    </body>
+</html>

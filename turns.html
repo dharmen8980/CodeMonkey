@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+        <meta name="color-scheme" content="light dark">
+        <meta name="theme-color" content="#0081bc">
+        <title>Dashboard · CodeMonkey</title>
+        <script src="/theme.js"></script>
+        <link rel="stylesheet" href="/brand.css">
+        <link rel="stylesheet" href="/activity.css">
+        <link rel="stylesheet" href="/turns.css">
+    </head>
+    <body class="turns-page" data-page="turns">
+        <a class="skip-link" href="#main">Skip to content</a>
+        <aside class="workspace-sidebar" data-workspace-nav aria-label="Workspace navigation"></aside>
+        <div class="workspace-main">
+            <header class="workspace-topbar">
+                <div class="breadcrumb">Workspace<span>/</span><strong>Dashboard</strong></div>
+                <div class="sync-status" id="sync-status">
+                    <span class="connection-dot"></span>
+                    <span id="last-update" role="status">Connecting…</span>
+                    <button class="icon-button" type="button" id="refresh" aria-label="Refresh Dashboard"><svg class="icon"><use href="#i-refresh"/></svg></button>
+                </div>
+            </header>
+            <main id="main" class="turns-content">
+                <div class="page-heading">
+                    <div>
+                        <div class="eyebrow">OBSERVE. UNDERSTAND. IMPROVE.</div>
+                        <h1>Every turn tells a story<span>.</span></h1>
+                        <p>Follow every task from request to result, then explore how each run worked.</p>
+                    </div>
+                    <div class="heading-actions">
+                        <label class="date-select"><svg class="icon"><use href="#i-calendar"/></svg><span class="sr-only">Date range for all analytics and runs</span><select id="date-range"><option value="all">All history</option><option value="7">Last 7 days</option><option value="30">Last 30 days</option><option value="90">Last 90 days</option></select></label>
+                        <button type="button" class="button" id="export-csv" disabled><svg class="icon"><use href="#i-download"/></svg>Export CSV</button>
+                    </div>
+                </div>
+                <div id="load-error" class="load-error" role="alert" hidden>
+                    <span id="load-error-text">Unable to load run analysis.</span>
+                    <button type="button" class="text-button" id="retry">Try again<span aria-hidden="true">↗</span></button>
+                </div>
+                <section class="operations-section" aria-label="Task status" aria-busy="true" id="operations">
+                    <div class="section-label"><h2>At a glance</h2><span id="operations-scope">All tasks · All history</span></div>
+                    <div class="operations-grid">
+                        <div class="operation-stat"><span>Total tasks</span><strong id="ops-total">—</strong></div>
+                        <div class="operation-stat"><span>Pending</span><strong id="ops-pending">—</strong></div>
+                        <div class="operation-stat"><span>Running</span><strong id="ops-running">—</strong></div>
+                        <div class="operation-stat"><span>Completed</span><strong id="ops-completed">—</strong></div>
+                        <div class="operation-stat"><span>Failed</span><strong id="ops-failed">—</strong></div>
+                        <div class="operation-stat"><span>Total cost</span><strong id="ops-cost">—</strong></div>
+                    </div>
+                </section>
+                <details class="analysis-section" id="analysis-section">
+                    <summary><span><strong>Run analysis</strong><small>Turns, phases, costs, and agent comparisons for finished runs</small></span><span class="analysis-chevron" aria-hidden="true">⌄</span></summary>
+                    <div class="analysis-content">
+                <div class="section-label">
+                    <h2>Overview</h2>
+                    <span id="overview-scope">Finished runs · All history</span>
+                    <button type="button" id="live-filter" class="live-filter" hidden></button>
+                </div>
+                <section class="metrics-grid" aria-label="Run statistics" aria-busy="true" id="metrics">
+                    <article class="metric">
+                        <div class="metric-label">Runs analyzed<svg class="icon"><use href="#i-grid"/></svg></div>
+                        <div class="metric-value" id="stat-count">—</div>
+                        <div class="metric-footer" id="stat-outcomes">Waiting for run data</div>
+                    </article>
+                    <article class="metric">
+                        <div class="metric-label" title="Model turns per finished run. One model turn can contain multiple tool calls.">
+                            Average turns
+                            <svg class="icon"><use href="#i-turns"/></svg>
+                        </div>
+                        <div class="metric-value" id="stat-avg-turns">—</div>
+                        <button class="metric-footer" data-distribution="num_turns" type="button" aria-label="View model turns distribution">View distribution<svg class="icon"><use href="#i-arrow"/></svg></button>
+                    </article>
+                    <article class="metric">
+                        <div class="metric-label">Discovery share<svg class="icon"><use href="#i-search"/></svg></div>
+                        <div class="metric-value discovery-value" id="stat-avg-discovery">—</div>
+                        <button class="metric-footer" data-distribution="discovery_pct" type="button" aria-label="View discovery share distribution">Of tool calls, on average<svg class="icon"><use href="#i-arrow"/></svg></button>
+                    </article>
+                    <article class="metric">
+                        <div class="metric-label">Before first edit<svg class="icon"><use href="#i-code"/></svg></div>
+                        <div class="metric-value" id="stat-avg-first-edit">—</div>
+                        <button class="metric-footer" data-distribution="turns_before_first_edit" type="button" aria-label="View first-edit distribution; runs with no edits are excluded">Average tool calls<svg class="icon"><use href="#i-arrow"/></svg></button>
+                    </article>
+                    <article class="metric metric-accent">
+                        <div class="metric-label">Average cost<svg class="icon"><use href="#i-dollar"/></svg></div>
+                        <div class="metric-value" id="stat-avg-cost">—</div>
+                        <button class="metric-footer" data-distribution="cost_usd" type="button" aria-label="View cost distribution">USD per run<svg class="icon"><use href="#i-arrow"/></svg></button>
+                    </article>
+                </section>
+                <div class="analytics-grid">
+                    <section class="analytics-panel phase-panel" aria-labelledby="phase-title">
+                        <div class="panel-heading">
+                            <div><h2 id="phase-title">Phase activity</h2><p>Every tool call, broken down by phase.</p></div>
+                            <div class="segmented-control" role="group" aria-label="Phase measurement">
+                                <button type="button" data-phase-mode="turns" aria-pressed="true">Tool calls</button>
+                                <button type="button" data-phase-mode="cost" aria-pressed="false">Cost</button>
+                            </div>
+                        </div>
+                        <div class="phase-visual">
+                            <div class="phase-donut" id="phase-donut" role="img" aria-label="Waiting for phase data">
+                                <div class="donut-center"><strong id="phase-total">—</strong><span id="phase-unit">tool calls</span></div>
+                            </div>
+                            <div class="phase-breakdown" id="phase-breakdown"><div class="panel-placeholder">Loading phase breakdown…</div></div>
+                        </div>
+                        <div class="panel-footnote" id="phase-insight">A complete picture of discovery, edits, verification, and delivery.</div>
+                    </section>
+                    <section class="analytics-panel cost-panel" aria-labelledby="cost-title">
+                        <div class="panel-heading">
+                            <div><h2 id="cost-title">Run cost</h2><p>Average token usage and cost by category.</p></div>
+                            <span class="unit-label">USD / RUN</span>
+                        </div>
+                        <div class="cost-stack" id="category-stack" role="img" aria-label="Waiting for cost data"></div>
+                        <div class="cost-columns"><span>Token category</span><span>Avg. tokens</span><span>Avg. cost</span></div>
+                        <div id="category-rows"><div class="panel-placeholder">Loading cost breakdown…</div></div>
+                        <div class="panel-footnote" id="cost-note">Category costs are scaled to the reported run total.</div>
+                    </section>
+                </div>
+                <section class="analytics-panel comparison-panel" aria-labelledby="comparison-title">
+                    <div class="panel-heading">
+                        <div><h2 id="comparison-title">Compare performance</h2><p>Compare how agents and models approach the work.</p></div>
+                        <div class="segmented-control" role="group" aria-label="Compare by">
+                            <button type="button" data-compare="agent" aria-pressed="true">By agent</button>
+                            <button type="button" data-compare="model" aria-pressed="false">By model</button>
+                        </div>
+                    </div>
+                    <div class="comparison-scroll" tabindex="0" role="region" aria-label="Agent and model comparison">
+                        <table class="data-table comparison-table">
+                            <thead>
+                                <tr>
+                                    <th scope="col" id="comparison-group">Agent</th>
+                                    <th scope="col" class="numeric">Runs</th>
+                                    <th scope="col" class="numeric">Avg. turns</th>
+                                    <th scope="col">Phase mix<span class="column-hint">tool calls</span></th>
+                                    <th scope="col" class="numeric">Calls before edit</th>
+                                    <th scope="col" class="numeric">Avg. cost</th>
+                                </tr>
+                            </thead>
+                            <tbody id="comparison-tbody"><tr><td colspan="6" class="table-empty">Loading comparisons…</td></tr></tbody>
+                        </table>
+                    </div>
+                </section>
+                    </div>
+                </details>
+                <section class="run-explorer" id="run-explorer" aria-labelledby="runs-title">
+                    <div class="section-label runs-heading">
+                        <h2 id="runs-title">Tasks &amp; runs<span class="count-badge" id="run-count">—</span></h2>
+                        <span>Open a task for its result, artifacts, and run timeline</span>
+                    </div>
+                    <div class="explorer-panel">
+                        <div class="explorer-toolbar">
+                            <label class="search-field"><svg class="icon"><use href="#i-search"/></svg><span class="sr-only">Search tasks and runs</span><input id="run-search" type="search" placeholder="Search tasks, sources, models, or run IDs…" autocomplete="off"><kbd aria-hidden="true">/</kbd></label>
+                            <div class="explorer-filters">
+                                <label><span class="sr-only">Filter by agent</span><select id="agent-filter"><option value="all">All agents</option></select></label>
+                                <label><span class="sr-only">Filter by status</span><select id="status-filter"><option value="all">All statuses</option><option value="pending">Pending</option><option value="running">Running</option><option value="completed">Completed</option><option value="failed">Failed</option><option value="timeout">Timed out</option><option value="killed">Stopped</option></select></label>
+                                <button type="button" class="text-button" id="clear-filters" hidden>Reset</button>
+                            </div>
+                        </div>
+                        <div class="explorer-subbar">
+                            <span id="results-summary" role="status">Loading runs…</span>
+                            <div class="run-view-controls">
+                                <div class="segmented-control compact" role="group" aria-label="Run phase measurement">
+                                    <button type="button" data-run-mode="turns" aria-pressed="true">Tool calls</button>
+                                    <button type="button" data-run-mode="cost" aria-pressed="false">Cost</button>
+                                </div>
+                                <label class="sort-control"><span>Sort:</span><select id="run-sort" aria-label="Sort runs"></select></label>
+                                <button type="button" class="icon-button sort-direction" id="sort-direction" aria-label="Sort ascending">↓</button>
+                            </div>
+                        </div>
+                        <div class="runs-table-wrap">
+                            <table class="data-table runs-table" id="turns-table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" data-sort="description"><button type="button">Task<span class="sort-indicator"></span></button></th>
+                                        <th scope="col" data-sort="agent"><button type="button">Agent / model<span class="sort-indicator"></span></button></th>
+                                        <th scope="col" data-sort="tool_calls_total" class="numeric"><button type="button">Calls<span class="sort-indicator"></span></button></th>
+                                        <th scope="col" class="phase-column">Phase mix</th>
+                                        <th scope="col" data-sort="turns_before_first_edit" class="numeric"><button type="button">Before edit<span class="sort-indicator"></span></button></th>
+                                        <th scope="col" data-sort="cost_usd" class="numeric"><button type="button">Cost<span class="sort-indicator"></span></button></th>
+                                        <th scope="col" data-sort="diff_lines" class="numeric"><button type="button">Changes<span class="sort-indicator"></span></button></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="turns-tbody">
+                                    <tr><td colspan="7" class="table-empty"><span class="loading-spinner"></span>Loading tasks…</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="explorer-footer">
+                            <div class="mini-legend" aria-label="Phase colors">
+                                <span class="discovery">Discovery</span>
+                                <span class="edit">Edit</span>
+                                <span class="build_test">Build / test</span>
+                                <span class="git">Git / MR</span>
+                                <span class="other">Other</span>
+                            </div>
+                            <div class="pagination">
+                                <span id="page-summary">—</span>
+                                <button type="button" class="icon-button previous-page" id="previous-page" aria-label="Previous page" disabled><svg class="icon"><use href="#i-chevron"/></svg></button>
+                                <button type="button" class="icon-button" id="next-page" aria-label="Next page" disabled><svg class="icon"><use href="#i-chevron"/></svg></button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <footer class="page-footer">
+                    <span><svg class="icon"><use href="#i-turns"/></svg>Small turns. A bigger picture.</span>
+                    <span>All tasks appear above. Run analysis includes finished runs with transcripts.</span>
+                </footer>
+            </main>
+        </div>
+        <dialog class="turns-dialog" id="detail-modal" aria-labelledby="detail-modal-title">
+            <div class="dialog-heading">
+                <div><span class="eyebrow" id="detail-modal-kind">RUN DETAIL</span><h2 id="detail-modal-title">Detail</h2></div>
+                <button type="button" class="icon-button" data-close-modal aria-label="Close details"><svg class="icon"><use href="#i-close"/></svg></button>
+            </div>
+            <pre class="diff-body" id="detail-modal-body">Loading…</pre>
+        </dialog>
+        <dialog class="turns-dialog distribution-dialog" id="percentile-modal" aria-labelledby="percentile-modal-title">
+            <div class="dialog-heading">
+                <div><span class="eyebrow">BEYOND THE AVERAGE</span><h2 id="percentile-modal-title">Distribution</h2></div>
+                <button type="button" class="icon-button" data-close-modal aria-label="Close distribution"><svg class="icon"><use href="#i-close"/></svg></button>
+            </div>
+            <div class="distribution-body">
+                <div class="distribution-stats" id="percentile-modal-stats"></div>
+                <div id="distribution-chart"></div>
+                <p class="distribution-note" id="distribution-note"></p>
+            </div>
+        </dialog>
+        <script src="/shell.js"></script>
+        <script src="/turns.js"></script>
+    </body>
+</html>

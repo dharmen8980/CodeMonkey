@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+        <meta name="color-scheme" content="light dark">
+        <meta name="theme-color" content="#0081bc">
+        <title>Triage · CodeMonkey</title>
+        <script src="/theme.js"></script>
+        <link rel="stylesheet" href="/brand.css">
+        <link rel="stylesheet" href="/activity.css">
+    </head>
+    <body data-page="triage" class="triage-page">
+        <a class="skip-link" href="#main">Skip to content</a>
+        <aside class="workspace-sidebar" data-workspace-nav aria-label="Workspace navigation"></aside>
+        <div class="workspace-main">
+            <header class="workspace-topbar">
+                <div class="breadcrumb">Workspace<span>/</span><strong>Triage</strong></div>
+                <div class="status-bar"><span id="last-update" role="status">Connecting…</span></div>
+            </header>
+            <main id="main" class="container">
+                <div class="page-heading">
+                    <div>
+                        <div class="eyebrow">SCOPE &amp; FEASIBILITY</div>
+                        <h1>Clarity before code.</h1>
+                        <p>Review decisions, clarification requests, and the live work behind each ticket.</p>
+                    </div>
+                    <div class="heading-actions"><a class="button" href="/pipeline">Open pipeline ↗</a></div>
+                </div>
+                <div class="stats">
+                    <div class="stat-card"><div class="label">Triage runs</div><div class="value " id="triage-count">—</div></div>
+                    <div class="stat-card"><div class="label">Feasible</div><div class="value completed" id="triage-feasible">—</div></div>
+                    <div class="stat-card">
+                        <div class="label">Clarification needed</div>
+                        <div class="value pending" id="triage-questions">—</div>
+                    </div>
+                    <div class="stat-card"><div class="label">Total spend</div><div class="value " id="triage-cost">—</div></div>
+                </div>
+                <div class="live-panel" id="live-panel" hidden>
+                    <div class="tasks-header"><h2>Live investigations</h2><span class="live-badge">polling every 3s</span></div>
+                    <div id="live-runs"></div>
+                </div>
+                <div class="tasks-header">
+                    <h2>Triage activity</h2>
+                    <span class="live-badge" title="One row per triage container run. A ticket can have more than one row if it went through a clarification round-trip or a retry after being blocked.">operational log</span>
+                </div>
+                <div class="toolbar">
+                    <label class="sr-only" for="triage-search">Search triage</label>
+                    <input type="search" id="triage-search" placeholder="Search tickets or decisions…">
+                    <label class="sr-only" for="triage-status">Filter triage status</label>
+                    <select id="triage-status">
+                        <option value="all">All outcomes</option>
+                        <option value="feasible">Feasible</option>
+                        <option value="needs_clarification">Needs clarification</option>
+                        <option value="infeasible">Infeasible</option>
+                        <option value="error">Error</option>
+                        <option value="running">Running</option>
+                    </select>
+                    <span class="result-count" id="triage-results" role="status"></span>
+                </div>
+                <div class="table-scroll" tabindex="0" role="region" aria-label="Triage activity">
+                    <table class="turns-table" id="triage-table">
+                        <thead>
+                            <tr><th>Started</th><th>Ticket</th><th>Status</th><th>Duration</th><th>Cost</th><th>Detail</th><th>Artifacts</th></tr>
+                        </thead>
+                        <tbody id="triage-tbody"></tbody>
+                    </table>
+                </div>
+                <footer class="page-footer"><span>CodeMonkey</span><span>Engineering with a clear view.</span></footer>
+            </main>
+        </div>
+        <script src="/shell.js"></script>
+        <script src="/triage.js"></script>
+    </body>
+</html>

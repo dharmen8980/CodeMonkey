@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+        <meta name="color-scheme" content="light dark">
+        <meta name="theme-color" content="#0081bc">
+        <title>Merge requests · Code-Monkey</title>
+        <script src="/theme.js"></script>
+        <link rel="stylesheet" href="/brand.css">
+        <link rel="stylesheet" href="/activity.css">
+    </head>
+    <body data-page="mr" class="mr-page">
+        <a class="skip-link" href="#main">Skip to content</a>
+        <aside class="workspace-sidebar" data-workspace-nav aria-label="Workspace navigation"></aside>
+        <div class="workspace-main">
+            <header class="workspace-topbar">
+                <div class="breadcrumb">Workspace<span>/</span><strong>Merge requests</strong></div>
+                <div class="status-bar"><span id="last-update" role="status">Connecting…</span></div>
+            </header>
+            <main id="main" class="container">
+                <div class="page-heading">
+                    <div>
+                        <div class="eyebrow">DELIVERY INSIGHTS</div>
+                        <h1>Understand every delivery.</h1>
+                        <p>See the effort, agent activity, and cost behind each merge request.</p>
+                    </div>
+                    <div class="heading-actions"><a class="button" href="/turns">Explore runs ↗</a></div>
+                </div>
+                <div class="stats">
+                    <div class="stat-card"><div class="label">Merge requests</div><div class="value " id="mr-count">—</div></div>
+                    <div class="stat-card"><div class="label">Agent runs</div><div class="value " id="mr-triggers">—</div></div>
+                    <div class="stat-card"><div class="label">Total spend</div><div class="value " id="mr-cost">—</div></div>
+                    <div class="stat-card"><div class="label">Changed lines</div><div class="value " id="mr-diff">—</div></div>
+                </div>
+                <div class="tasks-header">
+                    <h2>Merge request activity</h2>
+                    <span class="live-badge" title="Every trigger that named this MR, pipeline or manual comment — no attempt to tell them apart. Diff size is a rough complexity proxy to weigh against the trigger count.">rough estimate</span>
+                </div>
+                <div class="toolbar">
+                    <label class="sr-only" for="mr-search">Search merge requests</label>
+                    <input id="mr-search" type="search" placeholder="Search MR number or task…" autocomplete="off">
+                    <div class="mr-filters">
+                        <label><span class="sr-only">Filter by agent</span><select id="mr-agent"><option value="all">All agents</option></select></label>
+                        <label><span class="sr-only">Filter by trigger status</span><select id="mr-status"><option value="all">All statuses</option><option value="completed">Completed</option><option value="failed">Failed</option><option value="timeout">Timed out</option><option value="killed">Stopped</option></select></label>
+                        <button type="button" class="text-button" id="mr-reset" hidden>Reset</button>
+                    </div>
+                    <div class="mr-sort-controls">
+                        <label class="mr-sort-control"><span>Sort:</span><select id="mr-sort" aria-label="Sort merge requests"></select></label>
+                        <button type="button" class="mr-sort-direction" id="mr-sort-direction" aria-label="Sort ascending">↓</button>
+                    </div>
+                    <span class="result-count" id="mr-results" role="status"></span>
+                </div>
+                <div class="table-scroll" tabindex="0" role="region" aria-label="Merge request activity">
+                    <table class="turns-table" id="mr-table">
+                        <thead>
+                            <tr>
+                                <th scope="col" data-sort="mr_iid"><button type="button">MR<span class="sort-indicator"></span></button></th>
+                                <th scope="col" data-sort="trigger_count"><button type="button">Triggers<span class="sort-indicator"></span></button></th>
+                                <th scope="col" data-sort="total_cost_usd"><button type="button">Total Cost<span class="sort-indicator"></span></button></th>
+                                <th scope="col" data-sort="total_diff_lines"><button type="button">Diff<span class="sort-indicator"></span></button></th>
+                                <th scope="col" data-sort="first_started_at"><button type="button">First Trigger<span class="sort-indicator"></span></button></th>
+                                <th scope="col" data-sort="last_finished_at"><button type="button">Last Trigger<span class="sort-indicator"></span></button></th>
+                            </tr>
+                        </thead>
+                        <tbody id="mr-tbody"></tbody>
+                    </table>
+                </div>
+                <footer class="page-footer"><span>Code-Monkey</span><span>Engineering with a clear view.</span></footer>
+            </main>
+        </div>
+        <script src="/shell.js"></script>
+        <script src="/mr.js"></script>
+    </body>
+</html>

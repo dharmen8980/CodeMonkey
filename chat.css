@@ -1,0 +1,92 @@
+.chat-page { height: 100dvh; display: flex; flex-direction: column; overflow: hidden; }
+.chat-page .workspace-main { display: flex; flex-direction: column; flex: 1; min-height: 0; }
+.chat-page .workspace-topbar { flex-shrink: 0; }
+.chat-topbar-note { color: var(--color-muted); font-size: 12px; }
+.chat-layout { flex: 1; min-height: 0; display: flex; flex-direction: column; padding: 26px 36px 28px; width: 100%; max-width: 1500px; margin: 0 auto; }
+.chat-layout .page-heading { margin-bottom: 22px; flex-shrink: 0; }
+.chat-layout .page-heading h1 { font-size: 32px; }
+.chat-layout .page-heading p { font-size: 13px; }
+.chat-workbench { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 12px; display: flex; flex-direction: column; flex: 1; min-height: 0; overflow: hidden; }
+.chat-toolbar { display: flex; align-items: center; gap: 10px; padding: 12px 18px; border-bottom: 1px solid var(--color-border); flex-shrink: 0; }
+.chat-toolbar label { color: var(--color-muted); font-size: 12px; }
+.modelsel { font-size: 12px; min-height: 36px; padding-top: 6px; padding-bottom: 6px; }
+.chat-toolbar .danger { margin-left: auto; color: var(--color-error); background: var(--color-error-bg); border-color: var(--color-error); min-height: 34px; padding-top: 6px; padding-bottom: 6px; }
+#stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--color-border); border-bottom: 1px solid var(--color-border); flex-shrink: 0; }
+#stats .stat { display: flex; justify-content: center; align-items: center; gap: 8px; background: var(--color-blue-tint); padding: 9px; }
+#stats .v { color: var(--color-blue-dark); font-size: 15px; font-weight: 700; font-variant-numeric: tabular-nums; }
+#stats .k { color: var(--color-muted); font-size: 10px; }
+#log { flex: 1; min-height: 0; overflow-y: auto; padding: 24px; overscroll-behavior: contain; }
+.chat-welcome { max-width: 600px; margin: 25px auto; text-align: center; }
+.welcome-glyph { display: grid; place-items: center; width: 56px; height: 56px; color: var(--color-white); background: var(--color-brand-blue); border-radius: 12px; margin: 0 auto 20px; font: 700 21px var(--font-code); }
+.chat-welcome h2 { font-size: 32px; margin-bottom: 12px; }
+.chat-welcome > p { color: var(--color-muted); max-width: 430px; margin: 0 auto; font-size: 14px; }
+.chat-suggestions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 24px; }
+.chat-suggestions button { border: 1px solid var(--color-border); background: var(--color-blue-tint); color: var(--color-blue-dark); padding: 11px 14px; border-radius: 7px; font-size: 12px; }
+.msg { display: flex; margin: 0 0 19px; }
+.msg.user { justify-content: flex-end; }
+.bubble { max-width: 85%; padding: 13px 17px; border-radius: 10px; white-space: pre-wrap; overflow-wrap: anywhere; font-size: 14px; line-height: 1.7; }
+.msg.user .bubble { background: var(--color-blue-tint); color: var(--color-text); border-right: 3px solid var(--color-brand-blue); border-bottom-right-radius: 3px; }
+.msg.bot .bubble { background: var(--color-surface); border: 1px solid var(--color-border); border-left: 3px solid var(--color-brand-blue); border-bottom-left-radius: 3px; }
+.msg.sys .bubble { background: var(--color-background); color: var(--color-muted); font-size: 12px; }
+.msg.err .bubble { background: var(--color-error-bg); color: var(--color-error); font-size: 13px; }
+.activity-panel { width: min(420px, 95%); border: 1px solid var(--color-border); border-radius: 9px; background: var(--color-background); color: var(--color-muted); font-size: 12px; }
+.activity-summary { cursor: pointer; padding: 10px 14px; color: var(--color-text); font-weight: 600; }
+.activity-list { margin: 0; padding: 0 14px 12px; list-style: none; max-height: 190px; overflow: auto; }
+.activity-list li { display: flex; gap: 9px; align-items: baseline; padding: 5px 0; }
+.activity-mark { color: var(--color-brand-blue); font-weight: 700; }
+.activity-list li.done .activity-mark { color: var(--color-success); }
+.card { background: var(--color-blue-tint); border: 1px solid var(--color-brand-blue); border-radius: 9px; padding: 20px; margin-bottom: 20px; }
+.card h3 { font-size: 32px; margin-bottom: 12px; }
+.card .meta { color: var(--color-muted); font-size: 12px; margin-bottom: 12px; }
+.card textarea { width: 100%; min-height: 130px; font-size: 14px; }
+.card .row { display: flex; gap: 10px; margin-top: 12px; }
+.card button { padding: 10px 14px; border: 1px solid var(--color-border); border-radius: 6px; font-weight: 700; }
+.card .approve { background: var(--color-brand-orange); color: var(--color-black); border-color: var(--color-brand-orange); }
+.card .reject { background: var(--color-surface); color: var(--color-muted); }
+#composer { display: flex; align-items: flex-end; gap: 10px; padding: 16px 18px 9px; border-top: 1px solid var(--color-border); flex-shrink: 0; }
+#input { flex: 1; min-width: 0; min-height: 45px; max-height: 130px; resize: none; padding: 10px 13px; font-size: 16px; line-height: 1.5; background: var(--color-background); }
+#send { width: 44px; height: 44px; border: 0; border-radius: 7px; background: var(--color-brand-orange); color: var(--color-black); font-size: 24px; flex-shrink: 0; }
+.composer-hint { padding: 0 18px 10px; color: var(--color-muted); font-size: 10px; }
+.hint { color: var(--color-muted); padding: 14px; text-align: center; font-size: 13px; }
+.typing { display: flex; gap: 4px; padding: 4px 0; }
+.typing i { width: 6px; height: 6px; border-radius: 50%; background: var(--color-brand-blue); animation: typing 1.2s infinite; }
+.typing i:nth-child(2) { animation-delay: .2s; }
+.typing i:nth-child(3) { animation-delay: .4s; }
+@keyframes typing { 50% { opacity: .3; } }
+#historyModal { padding: 0; width: 590px; max-height: 80dvh; }
+#historyPanel { display: flex; flex-direction: column; max-height: 80dvh; }
+#historyPanel header { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 22px; border-bottom: 1px solid var(--color-border); }
+#historyList { overflow: auto; min-height: 100px; }
+.histitem { display: block; width: 100%; border: 0; border-bottom: 1px solid var(--color-border); background: var(--color-surface); text-align: left; padding: 17px 22px; }
+.histitem:hover, .histitem.current { background: var(--color-blue-tint); }
+.htitle { font-weight: 700; color: var(--color-heading); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.hmeta { display: flex; gap: 12px; font-size: 11px; color: var(--color-muted); margin-top: 5px; }
+.hmeta .active { color: var(--color-success); }
+@media (max-width: 760px) {
+    .chat-page .workspace-sidebar { flex-shrink: 0; }
+    .chat-layout { padding: 18px 12px max(12px, env(safe-area-inset-bottom)); }
+    .chat-layout .page-heading { gap: 10px; margin-bottom: 12px; }
+    .chat-layout .page-heading h1 { margin: 4px 0; }
+    .chat-layout .page-heading .eyebrow, .chat-layout .page-heading p, .chat-topbar-note { display: none; }
+    .chat-layout .heading-actions { width: auto; }
+    .chat-layout .heading-actions button { min-height: 34px; padding: 6px 12px; }
+    .chat-toolbar { padding: 9px 12px; gap: 6px; }
+    .chat-toolbar label { display: none; }
+    .modelsel { font-size: 16px; }
+    #stats .stat { padding: 7px 3px; flex-direction: column; gap: 0; }
+    #stats .v { font-size: 13px; }
+    #stats .k { font-size: 9px; }
+    #log { padding: 15px 12px; }
+    .chat-welcome { margin: 10px auto; }
+    .chat-welcome h2 { font-size: 32px; }
+    .chat-welcome > p { font-size: 12px; }
+    .welcome-glyph { width: 40px; height: 40px; font-size: 16px; margin-bottom: 12px; }
+    .chat-suggestions { margin-top: 16px; }
+    .bubble { max-width: 95%; padding: 10px 12px; }
+    #composer { padding: 10px 12px; }
+    .composer-hint { display: none; }
+    #historyPanel header { flex-wrap: wrap; padding: 18px; }
+    .card { padding: 14px; }
+    .card .row { flex-wrap: wrap; }
+}
+@media (max-height: 650px) { .chat-page { min-height: 650px; height: auto; overflow: auto; } .chat-workbench { min-height: 390px; } #log { max-height: 450px; } }

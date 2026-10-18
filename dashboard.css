@@ -1,0 +1,21 @@
+/* Dashboard layout; shared tokens, cards, and controls live in brand.css. */
+.task-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.task-card { background: var(--color-surface); border: 1px solid var(--color-border); border-top: 3px solid var(--color-brand-blue); border-radius: 9px; padding: 22px; min-width: 0; transition: border-color .15s; }
+.task-card:hover { border-color: var(--color-brand-blue); }
+.task-card:has(.task-detail), .task-card:has(.task-artifacts) { grid-column: 1 / -1; }
+.task-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; margin-bottom: 17px; }
+.task-desc { font-size: 16px; font-weight: 700; overflow-wrap: anywhere; }
+.task-toggle { text-align: left; padding: 0; background: none; color: var(--color-heading); border: 0; font: inherit; }
+.task-toggle:hover { color: var(--color-blue-dark); }
+.task-meta { display: flex; gap: 8px 13px; flex-wrap: wrap; color: var(--color-muted); font-size: 12px; }
+.task-meta > span { overflow-wrap: anywhere; min-width: 0; }
+.task-detail { margin-top: 20px; padding-top: 18px; border-top: 1px solid var(--color-border); }
+.task-detail-label { color: var(--color-blue-dark); font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
+.task-detail-output { padding: 16px; background: var(--color-background); border: 1px solid var(--color-border); border-radius: 7px; font: 12px/1.7 var(--font-code); white-space: pre-wrap; overflow-wrap: anywhere; max-height: 420px; overflow: auto; }
+.task-detail-output.error { background: var(--color-error-bg); color: var(--color-error); }
+.task-expand-hint { font-size: 11px; color: var(--color-blue-dark); margin-top: 16px; }
+.task-artifacts { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 16px; }
+.duration { color: var(--color-muted); }
+.task-list > .empty-state { grid-column: 1 / -1; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 10px; }
+@media (max-width: 1100px) { .task-list { grid-template-columns: 1fr; } }
+@media (max-width: 760px) { .task-card { padding: 18px; } .task-desc { font-size: 15px; } .task-top { flex-wrap: wrap; } }

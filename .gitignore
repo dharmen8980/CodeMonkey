@@ -1,6 +1,12 @@
 # Logs
 logs
 *.log
+artifacts/
+chats/
+tasks.json
+tasks.json.*
+pipeline.json
+pipeline.json.*
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*

@@ -1,0 +1,14 @@
+.git
+.env
+.env.*
+!.env.example
+artifacts
+chats
+logs
+tasks.json
+tasks.json.*
+pipeline.json
+pipeline.json.*
+node_modules
+*.log
+*.bak*

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+        <meta name="referrer" content="no-referrer">
+        <meta name="color-scheme" content="light dark">
+        <meta name="theme-color" content="#0081bc">
+        <title>Chat · Code-Monkey</title>
+        <script src="/theme.js"></script>
+        <link rel="stylesheet" href="/brand.css">
+        <link rel="stylesheet" href="/chat.css">
+    </head>
+    <body class="chat-page" data-page="chat">
+        <a class="skip-link" href="#main">Skip to content</a>
+        <aside class="workspace-sidebar" data-workspace-nav aria-label="Workspace navigation"></aside>
+        <div class="workspace-main">
+            <header class="workspace-topbar">
+                <div class="breadcrumb">Workspace<span>/</span><strong>Chat</strong></div>
+                <span class="chat-topbar-note">Your engineering assistant</span>
+            </header>
+            <main id="main" class="chat-layout">
+                <div class="page-heading">
+                    <div>
+                        <div class="eyebrow">IDEAS INTO ACTION</div>
+                        <h1>Let’s work through it.</h1>
+                        <p>Explore the codebase, investigate a run, or shape your next task.</p>
+                    </div>
+                    <div class="heading-actions">
+                        <button class="secondary-button" id="history" type="button">History</button>
+                        <button class="button" id="newchat" type="button">+ New chat</button>
+                    </div>
+                </div>
+                <div class="chat-workbench">
+                    <div class="chat-toolbar">
+                        <label for="model">Assistant model</label>
+                        <select id="model" class="modelsel">
+                            <option value="haiku">Haiku · fast</option>
+                            <option value="sonnet" selected>Sonnet · balanced</option>
+                            <option value="opus">Opus · advanced</option>
+                        </select>
+                        <button class="iconbtn danger" id="killagent" type="button" title="Stop this conversation’s agent" hidden>Stop agent</button>
+                    </div>
+                    <div id="stats" aria-label="Chat usage"></div>
+                    <div id="log" role="log" aria-label="Conversation" aria-live="polite">
+                        <div class="chat-welcome">
+                            <div class="welcome-glyph" aria-hidden="true">&lt;/&gt;</div>
+                            <h2>A good place to start.</h2>
+                            <p>Ask about runs, costs, failures, or the codebase. Review and approve proposed tasks before they run.</p>
+                            <div class="chat-suggestions">
+                                <button type="button" data-prompt="Help me understand the latest failed run.">Investigate a failed run ↗</button>
+                                <button type="button" data-prompt="Help me scope a new engineering task.">Shape a new task ↗</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="composer">
+                        <label class="sr-only" for="input">Message your engineering assistant</label>
+                        <textarea id="input" rows="1" placeholder="Ask a question or describe a task…" autocapitalize="sentences" autocorrect="on"></textarea>
+                        <button id="send" type="button" aria-label="Send message">↑</button>
+                    </div>
+                    <p class="composer-hint">Enter to send · Shift + Enter for a new line</p>
+                </div>
+            </main>
+        </div>
+        <dialog id="historyModal" aria-labelledby="history-title">
+            <div id="historyPanel">
+                <header>
+                    <h2 id="history-title">Conversations</h2>
+                    <button class="iconbtn" id="historyClose" type="button" aria-label="Close conversation history">Close</button>
+                </header>
+                <div id="historyList"></div>
+            </div>
+        </dialog>
+        <script src="/shell.js"></script>
+        <script src="/chat.js"></script>
+    </body>
+</html>
