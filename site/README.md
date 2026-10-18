@@ -17,4 +17,4 @@ Open `http://localhost:3000`. Run `npm run lint` and `npm run build` before publ
 
 Import the CodeMonkey GitHub repository as a **new Vercel project**. Set its **Root Directory** to `site`; Vercel should detect Next.js. Use the package scripts for install and build (`npm install` and `npm run build`). The site has no environment variables and does not proxy the orchestrator API.
 
-The project cards and setup guides link to the CodeMonkey and Harness Pro GitHub repositories. The current clean CodeMonkey repository uses Claude Code workers in Docker; Harness Pro integration is described as a next step.
+The project cards and setup guides link to the CodeMonkey and Harness Pro GitHub repositories. A deployed CodeMonkey setup already runs workers through Harness Pro. This public CodeMonkey checkout currently includes the Claude Code worker path; the Harness Pro adapter has not been published here.

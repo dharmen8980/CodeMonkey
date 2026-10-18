@@ -1,6 +1,6 @@
 # CodeMonkey
 
-A self-hosted GitLab task orchestrator. It receives tasks and MR webhooks, launches Claude Code workers in Docker, records runs, and offers a web dashboard, chat, and an optional acceptance pipeline.
+A self-hosted GitLab task orchestrator. It receives tasks and MR webhooks, launches Claude Code workers in Docker, records runs, and offers a web dashboard, chat, and an optional acceptance pipeline. A deployed CodeMonkey setup also uses Harness Pro for worker runs; that adapter is not included in this public checkout.
 
 This repository contains the reusable application only. Runtime state is created locally in `tasks.json`, `pipeline.json`, `artifacts/`, `chats/`, and `logs/`; all are ignored by Git. Edit the role templates in `instructions/` for your own repository. No worker starts until you configure credentials and request a task.
 
